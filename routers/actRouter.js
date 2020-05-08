@@ -25,4 +25,16 @@ router.delete('/:id', (req, res) => {
     })
 })
 
+router.put('/:id', (req, res) => {
+    const id = req.params.id
+    const upAct = req.body
+    Act.update(id, upAct)
+    .then(act => {
+        res.status(201).json(act)
+    })
+    .catch(err => {
+        res.status(500).json({error:"Could not update action"})
+    })
+})
+
 module.exports = router

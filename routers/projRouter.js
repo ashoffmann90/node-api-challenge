@@ -3,6 +3,16 @@ const Act = require('../data/helpers/actionModel')
 const Proj = require('../data/helpers/projectModel')
 const router = express.Router()
 
+router.get('/', (req, res) => {
+    Proj.get()
+    .then(proj => {
+        res.status(201).json(proj)
+    }) 
+    .catch(err => {
+        res.status(500).json({message:"error"})
+    })   
+})
+
 router.get('/:id', (req, res) => {
     const id = req.params.id
     Proj.get(id)
@@ -34,11 +44,11 @@ router.post('/', validateProj, (req, res) => {
         res.status(500).json({error:"Could not add project"}))
 })
 
-router.post('/:id/acts', (req, res) => {
+router.post('/:id/acts', validateProjId, validateAction, (req, res) => {
     const id = req.params.id
     const body = req.body
-    // const act = { description:body.description, notes:body.notes, id }
-    Act.insert({...body, id})
+    const act = { description:body.description, notes:body.notes, project_id: id }
+    Act.insert(act)
     .then(proj => {
         res.status(201).json(proj)
     })
@@ -77,6 +87,40 @@ function validateProj(req, res, next){
     } else {
         next()
     }
+}
+function validateProjId(req, res, next){
+    const id = req.params.id
+    Proj.get(id)
+    .then(proj => {
+        if(proj){
+            req.proj = proj
+            next()
+        } else {
+            res.status(400).json({message:"Invalid Project Id"})
+        }
+    })
+    .catch(err => {
+        res.status(500).json({error:"Project Id could not be validated"})
+    })
+}
+
+function validateAction(req, res, next){
+    const body = req.body
+    const id = req.params.id
+    const act = { description:body.description, notes:body.notes, project_id: id }
+    Proj.getProjectActions(act)
+    .then(act => {
+        console.log(act)
+        if(description.length < 128){
+            next()
+        } else {
+            res.status(400).json({ error:"Max description length is 128 characters"})
+        }
+    })
+    .catch(err => {
+        res.status(500).json({error:"Could not validate action"})
+    })
+
 }
 
 
