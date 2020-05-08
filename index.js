@@ -1,3 +1,10 @@
+const server = require('./server')
+const port = 4444
+
+server.listen(port, () => {
+    console.log(`\n*** Server listening on Port ${port} ***\n`)
+})
+
 /*
 play this: https://www.youtube.com/watch?v=d-diB65scQU
 
