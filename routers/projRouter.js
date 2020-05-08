@@ -111,7 +111,7 @@ function validateAction(req, res, next){
     Proj.getProjectActions(act)
     .then(act => {
         console.log(act)
-        if(description.length < 128){
+        if(act){
             next()
         } else {
             res.status(400).json({ error:"Max description length is 128 characters"})
