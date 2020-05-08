@@ -40,13 +40,25 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Mention two parts of Express that you learned about this week.
 
+Express is a framework that helps with the creation of web apps.
+You can user routers to seperate your app into smaller bits of code.
+
 - [ ] Describe Middleware?
+
+Middleware are functions that intervene in the operations, and allow you to trigger actions at certain points.
 
 - [ ] Describe a Resource?
 
+A response you get from the server. Contains the requested info and/or the status of the request made.
+
 - [ ] What can the API return to help clients know if a request was successful?
 
+It can return the status code and an accompanying message to help figure out who's end the error is on and make it easier to fix it.
+
 - [ ] How can we partition our application into sub-applications?
+
+You would use routers to divide the app into smaller apps. 
+
 
 ## Minimum Viable Product
 
