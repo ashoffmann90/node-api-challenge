@@ -37,8 +37,8 @@ router.post('/', validateProj, (req, res) => {
 router.post('/:id/acts', (req, res) => {
     const id = req.params.id
     const body = req.body
-    const act = { description:body.description, notes:body.notes, id }
-    Proj.insert(act)
+    // const act = { description:body.description, notes:body.notes, id }
+    Act.insert({...body, id})
     .then(proj => {
         res.status(201).json(proj)
     })
